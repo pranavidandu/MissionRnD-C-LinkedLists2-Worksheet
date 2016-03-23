@@ -20,5 +20,28 @@ struct node {
 };
 
 struct node * insertAtEveryKthNode(struct node *head, int K) {
-	return NULL;
+	if (head == NULL || K < 1)
+		return NULL;
+	struct node *ptr = head;//creating a temporary pointer
+	int pos = 1;
+	struct node* cur;
+	while (ptr -> next != NULL){
+		if (pos++ % K == 0){
+			cur = (struct node*) malloc(sizeof(struct node));
+			cur->num = K;
+			cur->next = ptr->next;
+			ptr->next = cur;
+			ptr = ptr->next->next;
+		}
+		else{
+			ptr = ptr->next;
+		}
+	}
+	if (pos % K == 0){//if K node is to placed at the end of the list
+		cur = (struct node*) malloc(sizeof(struct node));
+		cur->num = K;
+		cur->next = NULL;
+		ptr->next = cur;
+	}
+	return head;
 }
